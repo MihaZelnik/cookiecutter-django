@@ -1,6 +1,8 @@
 FROM python:3.6-alpine
 
 ENV PYTHONUNBUFFERED 1
+ENV DJANGO_SETTINGS_MODULE=config.settings.local
+ENV PIP_DISABLE_PIP_VERSION_CHECK=on
 
 RUN apk update \
   # psycopg2 dependencies
@@ -16,8 +18,9 @@ RUN apk update \
   && apk add postgresql-client
 
 # Requirements are installed here to ensure they will be cached.
-COPY ./requirements /requirements
-RUN pip install -r /requirements/local.txt
+COPY pyproject.toml pyproject.toml
+RUN pip install poetry
+RUN poetry config settings.virtualenvs.create false && poetry install
 
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
@@ -28,4 +31,5 @@ RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 WORKDIR /app
 
+RUN django-admin collectstatic --no-input
 ENTRYPOINT ["/entrypoint"]
