@@ -31,5 +31,4 @@ RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 WORKDIR /app
 
-RUN django-admin collectstatic --no-input
 ENTRYPOINT ["/entrypoint"]

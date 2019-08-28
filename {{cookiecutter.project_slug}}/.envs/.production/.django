@@ -16,9 +16,6 @@ DJANGO_SECURE_SSL_REDIRECT=False
 MAILGUN_API_KEY=
 DJANGO_SERVER_EMAIL=
 MAILGUN_DOMAIN=
-# django-allauth
-# ------------------------------------------------------------------------------
-DJANGO_ACCOUNT_ALLOW_REGISTRATION=True
 # django-compressor
 # ------------------------------------------------------------------------------
 COMPRESS_ENABLED=
