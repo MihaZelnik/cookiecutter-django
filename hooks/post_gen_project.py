@@ -28,9 +28,6 @@ INFO = "\x1b[1;33m [INFO]: "
 HINT = "\x1b[3;33m"
 SUCCESS = "\x1b[1;32m [SUCCESS]: "
 
-DEBUG_VALUE = "debug"
-
-
 def append_to_project_gitignore(path):
     gitignore_file_path = ".gitignore"
     with open(gitignore_file_path, "a") as gitignore_file:
@@ -113,7 +110,7 @@ def generate_random_user():
 
 
 def generate_postgres_user(debug=False):
-    return DEBUG_VALUE if debug else generate_random_user()
+    return generate_random_user()
 
 
 def set_postgres_user(file_path, value):
@@ -139,7 +136,7 @@ def append_to_gitignore_file(s):
         gitignore_file.write(os.linesep)
 
 
-def set_flags_in_envs(postgres_user, celery_flower_user, debug=False):
+def set_flags_in_envs(postgres_user, debug=False):
     local_django_envs_path = os.path.join(".envs", ".local", ".django")
     production_django_envs_path = os.path.join(".envs", ".production", ".django")
     local_postgres_envs_path = os.path.join(".envs", ".local", ".postgres")
@@ -149,13 +146,9 @@ def set_flags_in_envs(postgres_user, celery_flower_user, debug=False):
     set_django_admin_url(production_django_envs_path)
 
     set_postgres_user(local_postgres_envs_path, value=postgres_user)
-    set_postgres_password(
-        local_postgres_envs_path, value=DEBUG_VALUE if debug else None
-    )
+    set_postgres_password(local_postgres_envs_path)
     set_postgres_user(production_postgres_envs_path, value=postgres_user)
-    set_postgres_password(
-        production_postgres_envs_path, value=DEBUG_VALUE if debug else None
-    )
+    set_postgres_password(production_postgres_envs_path)
 
 
 def set_flags_in_settings_files():
@@ -164,15 +157,11 @@ def set_flags_in_settings_files():
 
 
 def main():
-    debug = "{{ cookiecutter.debug }}".lower() == "y"
 
     set_flags_in_envs(
-        DEBUG_VALUE if debug else generate_random_user(),
-        DEBUG_VALUE if debug else generate_random_user(),
-        debug=debug,
+        generate_random_user(),
     )
     set_flags_in_settings_files()
-
    
     append_to_gitignore_file(".env")
     append_to_gitignore_file(".envs/*")
