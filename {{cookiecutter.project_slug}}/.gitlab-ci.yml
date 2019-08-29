@@ -3,6 +3,12 @@
 # https://hub.docker.com/r/library/python
 image: docker:latest
 
+variables:
+  REGISTRY: "registry.gitlab.com"
+  GROUP_NAME: "{{ cookiecutter.gitlab_username }}"
+  PROJECT_NAME: "{{ cookiecutter.gitlab_project }}"
+  CONTAINER_RELEASE_IMAGE: "$REGISTRY/$GROUP_NAME/$PROJECT_NAME:$CI_COMMIT_SHA"
+
 stages:
   - build
   - checks
@@ -13,13 +19,13 @@ services:
 build:
   stage: build
   script:
-  - docker login registry.gitlab.com -u {{ cookiecutter.gitlab_username }} -p $GITLAB_PASSWORD
-  - docker build --file ./compose/local/django/Dockerfile . -t registry.gitlab.com/{{ cookiecutter.gitlab_username }}/{{ cookiecutter.gitlab_project }}:$CI_COMMIT_SHA
-  - docker push registry.gitlab.com/{{ cookiecutter.gitlab_username }}/{{ cookiecutter.gitlab_project }}:$CI_COMMIT_SHA
+  - docker login -u gitlab-ci-token -p "$CI_JOB_TOKEN" "$REGISTRY"
+  - docker build --file ./compose/local/django/Dockerfile . -t $CONTAINER_RELEASE_IMAGE
+  - docker push $CONTAINER_RELEASE_IMAGE
 
 test:
   stage: checks
-  image: registry.gitlab.com/{{ cookiecutter.gitlab_username }}/{{ cookiecutter.gitlab_project }}:$CI_COMMIT_SHA
+  image: $CONTAINER_RELEASE_IMAGE
   services:
     - postgres:{{ cookiecutter.postgresql_version }}
   variables:
@@ -32,7 +38,7 @@ test:
 
 lint:
   stage: checks
-  image: registry.gitlab.com/{{ cookiecutter.gitlab_username }}/{{ cookiecutter.gitlab_project }}:$CI_COMMIT_SHA
+  image: $CONTAINER_RELEASE_IMAGE
   script:
     - flake8
     - black --check
