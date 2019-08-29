@@ -21,7 +21,7 @@ shell:
 	docker-compose -f local.yml run --rm django python manage.py shell_plus
 
 test:
-	docker-compose -f local.yml run --rm django pytest $${TEST_ARGS}
+	docker-compose -f local.yml run --rm django py.test --ds=config.settings.test -s -v -x --ff $${TEST_ARGS}
 
 black:
 	docker-compose -f local.yml run --rm django black .

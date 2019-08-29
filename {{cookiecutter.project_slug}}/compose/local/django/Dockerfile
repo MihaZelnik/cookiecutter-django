@@ -22,13 +22,7 @@ COPY pyproject.toml pyproject.toml
 RUN pip install poetry
 RUN poetry config settings.virtualenvs.create false && poetry install
 
-COPY ./compose/production/django/entrypoint /entrypoint
-RUN sed -i 's/\r$//g' /entrypoint
-RUN chmod +x /entrypoint
-
 COPY ./compose/local/django/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 WORKDIR /app
-
-ENTRYPOINT ["/entrypoint"]

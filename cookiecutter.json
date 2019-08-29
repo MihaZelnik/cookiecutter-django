@@ -3,8 +3,10 @@
   "project_slug": "{{ cookiecutter.project_name.lower()|replace(' ', '_')|replace('-', '_')|replace('.', '_')|trim() }}",
   "description": "Behold My Awesome Project!",
   "author_name": "Daniel Roy Greenfeld",
+  "gitlab_username": "mihazelnik",
+  "gitlab_project": "{{cookiecutter.project_slug|replace('_', '-')}}",
   "domain_name": "example.com",
-  "email": "{{ cookiecutter.author_name.lower()|replace(' ', '.') }}@example.com",
+  "email": "{{ cookiecutter.author_name.lower()|replace(' ', '.') }}@{{cookiecutter.domain_name}}",
   "version": "0.1.0",
   "timezone": "UTC",
   "postgresql_version": [
