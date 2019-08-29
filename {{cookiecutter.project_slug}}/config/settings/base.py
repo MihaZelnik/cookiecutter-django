@@ -1,7 +1,7 @@
 """
 Base settings to build other settings files upon.
 """
-
+import datetime
 import environ
 
 ROOT_DIR = (
@@ -72,7 +72,12 @@ DJANGO_APPS = [
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
 ]
-THIRD_PARTY_APPS = ["rest_framework"]
+THIRD_PARTY_APPS = [
+    "rest_framework",
+    "corsheaders",
+    "drf_yasg",
+]
+
 
 LOCAL_APPS = [
     "{{ cookiecutter.project_slug }}.users.apps.UsersConfig",
@@ -234,3 +239,50 @@ LOGGING = {
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+REST_FRAMEWORK = {
+    # "EXCEPTION_HANDLER": "api.utils.exception_handler.custom_exception_handler",
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ),
+    "DEFAULT_RENDERER_CLASSES": (
+        "rest_framework.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ),
+    "DEFAULT_PARSER_CLASSES": ("rest_framework.parsers.JSONParser",),
+}
+
+LOGIN_URL = "rest_framework:login"
+LOGOUT_URL = "rest_framework:logout"
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=365),
+    "SLIDING_TOKEN_LIFETIME": datetime.timedelta(days=1),
+    "SLIDING_TOKEN_REFRESH_LIFETIME": datetime.timedelta(days=365),
+}
+
+SWAGGER_SETTINGS = {
+    "BASE_PATH": "/SWAGGER",
+    "RELATIVE_PATHS": True,
+    "DOC_EXPANSION": "list",
+    "API_PATH": "/",
+    "IS_AUTHENTICATED": True,
+    "IS_SUPERUSER": True,
+    "PERMISSION_DENIED_HANDLER": "django.contrib.auth.views.login",
+    "SECURITY_DEFINITIONS": {
+        "api_key": {"type": "apiKey", "in": "header", "name": "Authorization"}
+    },
+    "LOGIN_URL": "rest_framework:login",
+    "LOGOUT_URL": "rest_framework:logout",
+    "USE_SESSION_AUTH": True,
+    "APIS_SORTER": "alpha",
+    "EXCLUDED_URL_NAMES": ["api-root", "docs"],
+    "EXCLUDED_NAMESPACES": ["internal_apis"],
+    "API_VERSION": "0.1",
+    "SHOW_REQUEST_HEADERS": True,
+    "JSON_EDITOR": True,
+}
+
+CORS_ORIGIN_ALLOW_ALL = True

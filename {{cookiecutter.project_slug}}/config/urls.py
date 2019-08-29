@@ -4,6 +4,26 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework_simplejwt.views import TokenRefreshView
+
+schema_view = get_schema_view(
+    openapi.Info(title="{{ cookiecutter.project_name }}", default_version="v1"),
+    public=True
+)
+
+swagger_urlpatterns = [
+    path(
+        r"api/swagger(<format>\.json|\.yaml",
+        schema_view.without_ui(cache_timeout=0),
+        name="schema-json",
+    ),
+    path(
+        r"api/swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"
+    ),
+    path(r"api/redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+]
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
@@ -11,9 +31,9 @@ urlpatterns = [
     # Django Admin, use {% raw %}{% url 'admin:index' %}{% endraw %}
     path(settings.ADMIN_URL, admin.site.urls),
     # User management
-    path("users/", include("{{ cookiecutter.project_slug }}.users.urls", namespace="users")),
+    # path("users/", include("{{ cookiecutter.project_slug }}.users.urls", namespace="users")),
     # Your stuff: custom urls includes go here
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + swagger_urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
