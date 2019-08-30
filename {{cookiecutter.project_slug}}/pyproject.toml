@@ -42,7 +42,7 @@ factory-boy = "^2.12"
 isort = "^4.3"
 
 [tool.black]
-line-length = 100
+line-length = 120
 target-version = ['py37', 'py38']
 skip-numeric-underscore-normalization = true
 include = '\.py$'

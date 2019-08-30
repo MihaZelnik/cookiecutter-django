@@ -28,6 +28,7 @@ INFO = "\x1b[1;33m [INFO]: "
 HINT = "\x1b[3;33m"
 SUCCESS = "\x1b[1;32m [SUCCESS]: "
 
+
 def append_to_project_gitignore(path):
     gitignore_file_path = ".gitignore"
     with open(gitignore_file_path, "a") as gitignore_file:
@@ -158,11 +159,9 @@ def set_flags_in_settings_files():
 
 def main():
 
-    set_flags_in_envs(
-        generate_random_user(),
-    )
+    set_flags_in_envs(generate_random_user())
     set_flags_in_settings_files()
-   
+
     append_to_gitignore_file(".env")
     append_to_gitignore_file(".envs/*")
 

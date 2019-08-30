@@ -2,10 +2,12 @@ from djoser.serializers import UserCreateSerializer
 from rest_framework import serializers
 import pytz
 
+
 class UserCreateSerializer(UserCreateSerializer):
     """
     Overide djoser UserCreateSerializer so we can also include timezone, since we can not use REQUIRED_FIELDS, because timezone field is not a string
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["timezone"] = serializers.CharField(default="UTC")

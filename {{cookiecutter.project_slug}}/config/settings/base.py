@@ -73,7 +73,13 @@ DJANGO_APPS = [
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
 ]
-THIRD_PARTY_APPS = ["rest_framework", "corsheaders", "drf_yasg", "timezone_field", "djoser"]
+THIRD_PARTY_APPS = [
+    "rest_framework",
+    "corsheaders",
+    "drf_yasg",
+    "timezone_field",
+    "djoser",
+]
 
 
 LOCAL_APPS = [
@@ -86,7 +92,9 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 # MIGRATIONS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#migration-modules
-MIGRATION_MODULES = {"sites": "{{ cookiecutter.project_slug }}.contrib.sites.migrations"}
+MIGRATION_MODULES = {
+    "sites": "{{ cookiecutter.project_slug }}.contrib.sites.migrations"
+}
 
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
@@ -111,7 +119,9 @@ PASSWORD_HASHERS = [
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
@@ -206,7 +216,9 @@ X_FRAME_OPTIONS = "DENY"
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
+EMAIL_BACKEND = env(
+    "DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
+)
 # https://docs.djangoproject.com/en/2.2/ref/settings/#email-timeout
 EMAIL_TIMEOUT = 5
 
@@ -229,11 +241,16 @@ LOGGING = {
     "disable_existing_loggers": False,
     "formatters": {
         "verbose": {
-            "format": "%(levelname)s %(asctime)s %(module)s " "%(process)d %(thread)d %(message)s"
+            "format": "%(levelname)s %(asctime)s %(module)s "
+            "%(process)d %(thread)d %(message)s"
         }
     },
     "handlers": {
-        "console": {"level": "DEBUG", "class": "logging.StreamHandler", "formatter": "verbose"}
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        }
     },
     "root": {"level": "INFO", "handlers": ["console"]},
 }
@@ -273,7 +290,7 @@ DJOSER = {
 }
 
 SWAGGER_SETTINGS = {
-    "BASE_PATH": "/SWAGGER",
+    "BASE_PATH": "/swagger",
     "RELATIVE_PATHS": True,
     "DOC_EXPANSION": "list",
     "API_PATH": "/",
@@ -289,7 +306,7 @@ SWAGGER_SETTINGS = {
     "APIS_SORTER": "alpha",
     "EXCLUDED_URL_NAMES": ["api-root", "docs"],
     "EXCLUDED_NAMESPACES": ["internal_apis"],
-    "API_VERSION": "0.1",
+    "API_VERSION": "{{cookiecutter.version}}",
     "SHOW_REQUEST_HEADERS": True,
     "JSON_EDITOR": True,
 }
