@@ -290,7 +290,7 @@ DJOSER = {
 }
 
 SWAGGER_SETTINGS = {
-    "BASE_PATH": "/swagger",
+    "BASE_PATH": "swagger/",
     "RELATIVE_PATHS": True,
     "DOC_EXPANSION": "list",
     "API_PATH": "/",

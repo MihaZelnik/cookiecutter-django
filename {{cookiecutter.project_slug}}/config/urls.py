@@ -10,12 +10,11 @@ urlpatterns = (
     [
         path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
         path(settings.ADMIN_URL, admin.site.urls),
-        path(settings.SWAGGER["BASE_PATH"], include("utils.swagger")),
+        path(settings.SWAGGER_SETTINGS["BASE_PATH"].strip(), include("utils.swagger")),
         path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
         path("", include("djoser.urls")),
         path("auth/", include("djoser.urls.jwt")),
     ]
-    + swagger_urlpatterns
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 )
 
@@ -23,24 +22,11 @@ if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit
     # these url in browser to see how these error pages look like.
     urlpatterns += [
-        path(
-            "400/",
-            default_views.bad_request,
-            kwargs={"exception": Exception("Bad Request!")},
-        ),
-        path(
-            "403/",
-            default_views.permission_denied,
-            kwargs={"exception": Exception("Permission Denied")},
-        ),
-        path(
-            "404/",
-            default_views.page_not_found,
-            kwargs={"exception": Exception("Page not Found")},
-        ),
+        path("400/", default_views.bad_request, kwargs={"exception": Exception("Bad Request!")}),
+        path("403/", default_views.permission_denied, kwargs={"exception": Exception("Permission Denied")}),
+        path("404/", default_views.page_not_found, kwargs={"exception": Exception("Page not Found")}),
         path("500/", default_views.server_error),
     ]
     if "debug_toolbar" in settings.INSTALLED_APPS:
         import debug_toolbar
-
         urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
