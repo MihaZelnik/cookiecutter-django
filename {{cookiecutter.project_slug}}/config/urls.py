@@ -6,10 +6,12 @@ from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
+from rest_framework import permissions
 from rest_framework_simplejwt.views import TokenRefreshView
 
 schema_view = get_schema_view(
-    openapi.Info(title="{{cookiecutter.project_name}}", default_version="v1"), public=True
+    openapi.Info(title="{{cookiecutter.project_name}}", default_version="v1"), public=True,
+    permission_classes=(permissions.AllowAny,),
 )
 
 swagger_urlpatterns = [
@@ -27,11 +29,9 @@ urlpatterns = (
         path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
         path("about/", TemplateView.as_view(template_name="pages/about.html"), name="about"),
         path(settings.ADMIN_URL, admin.site.urls),
-        path("", include("{{cookiecutter.project_slug}}.users.urls", namespace="users")),
-        path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
         path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
-        path('auth/', include('djoser.urls')),
-        path('auth/', include('djoser.urls.jwt')),
+        path("auth/", include("djoser.urls")),
+        path("auth/", include("djoser.urls.jwt")),
     ]
     + swagger_urlpatterns
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

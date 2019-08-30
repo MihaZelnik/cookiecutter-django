@@ -73,13 +73,7 @@ DJANGO_APPS = [
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
 ]
-THIRD_PARTY_APPS = [
-    "rest_framework", 
-    "corsheaders", 
-    "drf_yasg", 
-    "timezone_field", 
-    "djoser",
-]
+THIRD_PARTY_APPS = ["rest_framework", "corsheaders", "drf_yasg", "timezone_field", "djoser"]
 
 
 LOCAL_APPS = [
@@ -272,10 +266,10 @@ SIMPLE_JWT = {
 }
 
 DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
-    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': '#/activate/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL': True,
+    "PASSWORD_RESET_CONFIRM_URL": "#/password/reset/confirm/{uid}/{token}",
+    "USERNAME_RESET_CONFIRM_URL": "#/username/reset/confirm/{uid}/{token}",
+    "ACTIVATION_URL": "#/activate/{uid}/{token}",
+    "SEND_ACTIVATION_EMAIL": True,
 }
 
 SWAGGER_SETTINGS = {
