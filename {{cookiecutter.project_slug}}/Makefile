@@ -21,8 +21,11 @@ shell:
 	docker-compose -f local.yml run --rm django python manage.py shell_plus
 
 test:
-	docker-compose -f local.yml run --rm django py.test --ds=config.settings.test -s -v -x --ff $${TEST_ARGS}
+	docker-compose -f local.yml run --rm django py.test -s -v -x --ff $${TEST_ARGS}
 
+test-all:
+	docker-compose -f local.yml run --rm django py.test
+	
 black:
 	docker-compose -f local.yml run --rm django black .
 
@@ -32,9 +35,11 @@ lint:
 isort:
 	docker-compose -f local.yml run --rm django isort -y
 
-drop-db:
+stop:
 	docker-compose -f local.yml down --volumes
 
+checks:
+	make black && make lint && make isort
 
 wakeup-database:
 	docker-compose -f local.yml up -d postgres

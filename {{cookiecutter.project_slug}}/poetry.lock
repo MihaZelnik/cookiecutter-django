@@ -250,6 +250,18 @@ redis = ">=2.10.0"
 
 [[package]]
 category = "main"
+description = "A Django app providing database and form fields for pytz timezone objects."
+name = "django-timezone-field"
+optional = false
+python-versions = "*"
+version = "3.0"
+
+[package.dependencies]
+django = ">=1.8"
+pytz = "*"
+
+[[package]]
+category = "main"
 description = "Web APIs for Django, made easy."
 name = "djangorestframework"
 optional = false
@@ -926,7 +938,7 @@ version = "0.6.0"
 more-itertools = "*"
 
 [metadata]
-content-hash = "08803a15a43ae19a2a799853a0b78017459de992b6d4b1063e9eaa77a6c676b4"
+content-hash = "ee0f9fa0b7545eeaf9c9c51831657cd59de0620a6d5bde07317c65475d5ed9b6"
 python-versions = "^3.7"
 
 [metadata.hashes]
@@ -954,6 +966,7 @@ django-environ = ["6c9d87660142608f63ec7d5ce5564c49b603ea8ff25da595fd6098f6dc82a
 django-extensions = ["4aafdb865104eaa5d681b9976b36c52c9d441be89b7d782e40808f1c5c0c8f93", "8a2552fdeb222b23895ef52cdc28fc56efba976f6da07ca92937f6f5e626e345"]
 django-model-utils = ["3f130a262e45d73e0950d2be76af4bf4ee86804dd60e5f90afc5cd948fcfe760", "682f58c1de330cedcda58cc85d5232c5b47a9e2cb67bef4541fb43fdaeb18e96"]
 django-redis = ["af0b393864e91228dd30d8c85b5c44d670b5524cb161b7f9e41acc98b6e5ace7", "f46115577063d00a890867c6964ba096057f07cb756e78e0503b89cd18e4e083"]
+django-timezone-field = ["7d7a37cfeacec5b1e81cd2f0aa334d46ebaa369cd516028579ed343cbc676c38", "d9fdab77c443b78c362ffaeb50fe7d7b54692c89aaae8ca1cae67848139b82ac"]
 djangorestframework = ["42979bd5441bb4d8fd69d0f385024a114c3cae7df0f110600b718751250f6929", "aedb48010ebfab9651aaab1df5fd3b4848eb4182afc909852a2110c24f89a359"]
 djangorestframework-simplejwt = ["4cb1a51bf9b098b983e1326a1cfc65fb0b3c5a2aa0fa43effdbf05dd6da5e8cb", "d025211806622c53020aa4f66029f1f7305e38de6439116b4a842661fc02cf36"]
 drf-yasg = ["68fded2ffdf46e03f33e766184b7d8f1e1a5236f94acfd0c4ba932a57b812566", "fcef74709ead2b365410be3d12afbfd0a6e49d1efe615a15a929da7e950bb83c"]

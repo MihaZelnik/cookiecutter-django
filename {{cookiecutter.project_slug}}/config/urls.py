@@ -8,32 +8,33 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework_simplejwt.views import TokenRefreshView
 
-schema_view = get_schema_view(
-    openapi.Info(title="{{ cookiecutter.project_name }}", default_version="v1"),
-    public=True
-)
+schema_view = get_schema_view(openapi.Info(title="{{cookiecutter.project_name}}", default_version="v1"), public=True)
 
 swagger_urlpatterns = [
     path(
-        r"api/swagger(<format>\.json|\.yaml",
+        r"swagger(<format>\.json|\.yaml",
         schema_view.without_ui(cache_timeout=0),
         name="schema-json",
     ),
-    path(
-        r"api/swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"
-    ),
-    path(r"api/redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+    path(r"swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
+    path(r"redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]
 
-urlpatterns = [
-    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
-    path("about/", TemplateView.as_view(template_name="pages/about.html"), name="about"),
-    # Django Admin, use {% raw %}{% url 'admin:index' %}{% endraw %}
-    path(settings.ADMIN_URL, admin.site.urls),
-    # User management
-    # path("users/", include("{{ cookiecutter.project_slug }}.users.urls", namespace="users")),
-    # Your stuff: custom urls includes go here
-] + swagger_urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns = (
+    [
+        path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
+        path("about/", TemplateView.as_view(template_name="pages/about.html"), name="about"),
+        # Django Admin, use {% url 'admin:index' %}
+        path(settings.ADMIN_URL, admin.site.urls),
+        # User management
+        path("", include("{{cookiecutter.project_slug}}.users.urls", namespace="users")),
+        # Your stuff: custom urls includes go here
+        path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+        path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+    ]
+    + swagger_urlpatterns
+    + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+)
 
 if settings.DEBUG:
     # This allows the error pages to be debugged during development, just visit

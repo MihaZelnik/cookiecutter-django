@@ -2,6 +2,7 @@
 Base settings to build other settings files upon.
 """
 import datetime
+
 import environ
 
 ROOT_DIR = (
@@ -72,11 +73,7 @@ DJANGO_APPS = [
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
 ]
-THIRD_PARTY_APPS = [
-    "rest_framework",
-    "corsheaders",
-    "drf_yasg",
-]
+THIRD_PARTY_APPS = ["rest_framework", "corsheaders", "drf_yasg", "timezone_field"]
 
 
 LOCAL_APPS = [
@@ -118,6 +115,10 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {"min_length": 10},
+    },
 ]
 
 # MIDDLEWARE
@@ -286,3 +287,5 @@ SWAGGER_SETTINGS = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+SEND_ACTIVATION_EMAIL = False

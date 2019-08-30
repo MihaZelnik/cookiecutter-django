@@ -2,6 +2,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from model_utils.models import TimeStampedModel
+from timezone_field import TimeZoneField
 
 
 class UserManager(BaseUserManager):
@@ -42,6 +43,8 @@ class User(AbstractUser, TimeStampedModel):
     username = None
     email = models.EmailField(unique=True)
     name = models.CharField(blank=True, max_length=255)
+
+    timezone = TimeZoneField(default="UTC")
 
     objects = UserManager()
 
