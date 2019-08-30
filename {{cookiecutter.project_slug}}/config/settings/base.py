@@ -73,7 +73,13 @@ DJANGO_APPS = [
     # "django.contrib.humanize", # Handy template tags
     "django.contrib.admin",
 ]
-THIRD_PARTY_APPS = ["rest_framework", "corsheaders", "drf_yasg", "timezone_field"]
+THIRD_PARTY_APPS = [
+    "rest_framework", 
+    "corsheaders", 
+    "drf_yasg", 
+    "timezone_field", 
+    "djoser",
+]
 
 
 LOCAL_APPS = [
@@ -258,10 +264,18 @@ LOGIN_URL = "rest_framework:login"
 LOGOUT_URL = "rest_framework:logout"
 
 SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES": ("JWT",),
     "ACCESS_TOKEN_LIFETIME": datetime.timedelta(days=1),
     "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=365),
     "SLIDING_TOKEN_LIFETIME": datetime.timedelta(days=1),
     "SLIDING_TOKEN_REFRESH_LIFETIME": datetime.timedelta(days=365),
+}
+
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
 }
 
 SWAGGER_SETTINGS = {
@@ -287,5 +301,4 @@ SWAGGER_SETTINGS = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
-
 SEND_ACTIVATION_EMAIL = False

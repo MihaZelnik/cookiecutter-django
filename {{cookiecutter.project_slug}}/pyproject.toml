@@ -25,6 +25,7 @@ drf-yasg = "^1.16"
 django-cors-headers = "^3.1"
 djangorestframework_simplejwt = "^4.3"
 django-timezone-field = "^3.0"
+djoser = "^2.0"
 
 [tool.poetry.dev-dependencies]
 Werkzeug = "^0.15.5"

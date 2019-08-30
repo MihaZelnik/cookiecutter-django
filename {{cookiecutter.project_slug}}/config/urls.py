@@ -30,6 +30,8 @@ urlpatterns = (
         path("", include("{{cookiecutter.project_slug}}.users.urls", namespace="users")),
         path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
         path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+        path('auth/', include('djoser.urls')),
+        path('auth/', include('djoser.urls.jwt')),
     ]
     + swagger_urlpatterns
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
