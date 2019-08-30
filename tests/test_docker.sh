@@ -16,9 +16,6 @@ cd .cache/docker
 cookiecutter ../../ --no-input --overwrite-if-exists use_docker=y $@
 cd my_awesome_project
 
-# run the project's type checks
-docker-compose -f local.yml run django mypy my_awesome_project
-
 # Run black with --check option
 docker-compose -f local.yml run django black --check --diff  --exclude 'migrations' ./
 
@@ -30,3 +27,5 @@ docker-compose -f local.yml run django python manage.py makemigrations --dry-run
 
 # Test support for translations
 docker-compose -f local.yml run django python manage.py makemessages
+
+# docker-compose -f local.yml down --volumes

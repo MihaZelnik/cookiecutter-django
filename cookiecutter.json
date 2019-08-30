@@ -2,11 +2,11 @@
   "project_name": "My Awesome Project",
   "project_slug": "{{ cookiecutter.project_name.lower()|replace(' ', '_')|replace('-', '_')|replace('.', '_')|trim() }}",
   "description": "Behold My Awesome Project!",
-  "author_name": "Daniel Roy Greenfeld",
+  "author_name": "Miha Zelnik",
   "gitlab_username": "mihazelnik",
   "gitlab_project": "{{cookiecutter.project_slug|replace('_', '-')}}",
   "domain_name": "example.com",
-  "email": "{{ cookiecutter.author_name.lower()|replace(' ', '.') }}@{{cookiecutter.domain_name}}",
+  "email": "{{ cookiecutter.author_name.lower()|replace(' ', '.') }}@gmail.com",
   "version": "0.1.0",
   "timezone": "UTC",
   "postgresql_version": [

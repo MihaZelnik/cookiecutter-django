@@ -5,7 +5,7 @@ import model_utils.fields
 import timezone_field.fields
 from django.db import migrations, models
 
-import my_awesome_project.users.models
+import {{cookiecutter.project_slug}}.users.models
 
 
 class Migration(migrations.Migration):
@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
                 'db_table': 'user',
             },
             managers=[
-                ('objects', my_awesome_project.users.models.UserManager()),
+                ('objects', {{cookiecutter.project_slug}}.users.models.UserManager()),
             ],
         ),
     ]
